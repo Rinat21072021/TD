@@ -37,7 +37,6 @@ function App() {
             {id: v1(), title: "GraphQL", isDone: false},
         ]
     })
-
     function removeTask(id: string,todolistID:string) {
         setTasks({...tasks, [todolistID]:tasks[todolistID].filter(f=>f.id!==id)})
     }
@@ -60,14 +59,23 @@ function App() {
 
     function removeTodolist(todolistID:string){
         setTodolists(todolists.filter(fl=>fl.id!==todolistID))
-
         delete tasks[todolistID]
         setTasks({...tasks})
     }
 
+    function addTodolist(title:string){
+        let todolist:TodolistType = {
+            id:v1(),
+            title:title,
+            filter:'all'
+        }
+        setTodolists([todolist,...todolists])
+        setTasks({...tasks,[todolist.id]:[]})
+    }
+
     return (
         <div className="App">
-            <InputWithButton callback={()=>{}} todolistID={'sd'}/>
+            <InputWithButton callback={addTodolist} />
             {todolists.map(m => {
                 let tasksForTodolist = tasks[m.id];
 
@@ -88,6 +96,7 @@ function App() {
                     changeTaskStatus={changeStatus}
                     filter={m.filter}
                     removeTodolist={removeTodolist}
+
                 />
             })}
 

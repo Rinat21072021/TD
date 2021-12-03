@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
 type typeProps={
-    callback: (title:string,todolistID:string)=>void
-    todolistID:string
+    callback: (title:string)=>void
+
 }
 export const InputWithButton=(props:typeProps)=>{
     let [title, setTitle] = useState("")
@@ -9,7 +9,7 @@ export const InputWithButton=(props:typeProps)=>{
 
     const addTask = () => {
         if (title.trim() !== "") {
-            props.callback(title.trim(), props.todolistID);
+            props.callback(title.trim());
             setTitle("");
         } else {
             setError("Title is required");
