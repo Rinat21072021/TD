@@ -3,8 +3,8 @@ import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {InputWithButton} from "./components/InputWhithButton";
-
 export type FilterValuesType = "all" | "active" | "completed";
+//spanEdit todolist title
 type TodolistType = {
     id: string
     title: string
