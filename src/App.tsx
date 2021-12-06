@@ -4,7 +4,7 @@ import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {InputWithButton} from "./components/InputWhithButton";
 export type FilterValuesType = "all" | "active" | "completed";
-//spanEdit todolist title
+
 type TodolistType = {
     id: string
     title: string
@@ -39,6 +39,9 @@ function App() {
     })
     function removeTask(id: string,todolistID:string) {
         setTasks({...tasks, [todolistID]:tasks[todolistID].filter(f=>f.id!==id)})
+    }
+    function onChangeTitleTodolist(newTitle: string,todolistID:string){
+        setTodolists(todolists.map(m=>m.id===todolistID ? {...m, title:newTitle}:m))
     }
 
     function addTask(title: string,todolistID:string) {
@@ -101,6 +104,7 @@ function App() {
                     filter={m.filter}
                     removeTodolist={removeTodolist}
                     onChangeTitle={onChangeTitle}
+                    onChangeTitleTodolist={onChangeTitleTodolist}
 
                 />
             })}

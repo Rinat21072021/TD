@@ -14,6 +14,7 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (taskId: string, todolistID: string) => void
+    onChangeTitleTodolist:(newTitle: string,todolistID:string)=>void
     changeFilter: (value: FilterValuesType, todolistID: string) => void
     addTask: (title: string, todolistID: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistID: string) => void
@@ -35,6 +36,9 @@ export function Todolist(props: PropsType) {
         props.changeFilter(value, props.todolistID)
     }
     const onClickHandlerRemove = (Tid: string) => props.removeTask(Tid, props.todolistID)
+    const onChangeTitleTodolistHandler = (newTitle: string) =>{
+        props.onChangeTitleTodolist(newTitle, props.todolistID)
+    }
 
     const addTaskWrapper = (title: string) => {
         props.addTask(title, props.todolistID)
@@ -42,7 +46,8 @@ export function Todolist(props: PropsType) {
 
     return <div>
 
-        <h3>{props.title} <Button callback={() => removeTodolistHandler()} name='X'/></h3>
+        <h3><EditSpan title={props.title} onChangeTitle={onChangeTitleTodolistHandler}/></h3>
+        {/*<h3>{props.title} <Button callback={() => removeTodolistHandler()} name='X'/></h3>*/}
         <InputWithButton callback={addTaskWrapper}/>
         {/*<Button callback={()=>errorChecked()} name={'x'}/>*/}
 
