@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import {Icon, IconButton} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 type typeProps={
     callback: (title:string)=>void
 
@@ -31,7 +33,10 @@ export const InputWithButton=(props:typeProps)=>{
                    onKeyPress={onKeyPressHandler}
                    className={error ? "error" : ""}
             />
+
+            {/*<Icon onClick={addTask} className="fa fa-plus-circle" color="secondary" />*/}
             <button onClick={addTask}>+</button>
+
             {error && <div className="error-message">{error}</div>}
         </div>
     )

@@ -1,8 +1,11 @@
 import React, {ChangeEvent, useState} from "react";
+import {Delete} from "@material-ui/icons";
+import {IconButton} from "@material-ui/core";
 
 export type EditSpanPropsType = {
     title: string
     onChangeTitle:(title:string)=>void
+
 
 }
 export const EditSpan = (props: EditSpanPropsType) => {
@@ -28,4 +31,5 @@ export const EditSpan = (props: EditSpanPropsType) => {
                  onChange={onChangeTitleHandler}
 
         />
+
 }
