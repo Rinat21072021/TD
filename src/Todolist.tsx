@@ -3,11 +3,8 @@ import {FilterValuesType} from './App';
 import {ButtonComponents} from "./components/ButtonComponents";
 import {InputWithButton} from "./components/InputWhithButton";
 import {EditSpan} from "./components/EditSpan";
-import {ButtonGroup, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import {ButtonGroup, List, ListItem, Typography} from "@material-ui/core";
 import Checkbox from '@material-ui/core/Checkbox';
-
-
-
 
 
 export type TaskType = {
@@ -50,17 +47,21 @@ export function Todolist(props: PropsType) {
 
 	return <div>
 
-		<Typography variant={'h5'} style={{fontWeight: 'bold'}}>
+		<Typography
+			variant={'h5'}
+			style={{fontWeight: 'bold'}}
+			align={"center"}
+		>
 			<EditSpan title={props.title} onChangeTitle={onChangeTitleTodolistHandler}/>
 			<ButtonComponents icon={'removeTodo'} callback={() => removeTodolistHandler()}/>
 		</Typography>
 
-		<InputWithButton callback={addTaskWrapper}/>
+		<InputWithButton isLabel={false} callback={addTaskWrapper}/>
 
 		<List>
 			{
 				props.tasks.map(t => {
-					// const onClickHandlerRemove = () => props.removeTask(t.id, props.todolistID)
+
 					const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 						props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolistID);
 					}
@@ -69,7 +70,7 @@ export function Todolist(props: PropsType) {
 					}
 					return <ListItem divider
 									 disableGutters
-									 style={{padding: '0px', justifyContent:'space-between', display:'flex'}}
+									 style={{padding: '0px', justifyContent: 'space-between', display: 'flex'}}
 									 key={t.id}
 									 className={t.isDone ? "is-done" : ""}>
 						<Checkbox onChange={onChangeHandler}
