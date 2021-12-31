@@ -2,7 +2,7 @@ import {TasksType} from "../App";
 import {v1} from "uuid";
 import {AddTodolistAC, AddTodolistAT, RemoveTodolistAT} from "./todolists-reducer";
 
-
+//todo
 export type RemoveTaskAT = {
 	type: "REMOVE-TASK"
 	id: string
