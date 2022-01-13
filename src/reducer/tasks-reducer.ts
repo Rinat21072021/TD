@@ -30,8 +30,9 @@ export type ChangeTaskTitleAT = {
 
 export type ActionType = RemoveTaskAT | AddTaskAT | ChangeTaskStatusAT
 	| ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT
+export const initialState: TasksType ={}
 
-export const tasksReducer = (state: TasksType, action: ActionType): TasksType => {
+export const tasksReducer = (state = initialState, action: ActionType): TasksType => {
 	switch (action.type) {
 		case "REMOVE-TASK":
 			return {...state, [action.todolistID]: state[action.todolistID].filter(el => el.id !== action.id)}
