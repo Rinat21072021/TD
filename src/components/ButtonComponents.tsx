@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import './../App.css';
 import {Button, IconButton} from "@material-ui/core";
 import {DeleteOutline, HighlightOff} from "@material-ui/icons";
@@ -10,10 +10,10 @@ type propsType = {
 	icon: ButtonIconType
 }
 
-export const ButtonComponents = (props: propsType) => {
-	const onClickHandler = () => {
+export const ButtonComponents =React.memo( (props: propsType) => {
+	const onClickHandler = useCallback(() => {
 		props.callback()
-	}
+	},[props.callback])
 
 	switch (props.icon) {
 		case 'removeTodo':
@@ -57,4 +57,4 @@ export const ButtonComponents = (props: propsType) => {
 	}
 
 
-}
+})

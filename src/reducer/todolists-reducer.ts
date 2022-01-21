@@ -67,7 +67,7 @@ export const ChangeTodolistFilterAC=(filter:FilterValuesType,id:string):ChangeTo
 		id:id
 	}
 }
-export const ChangeTodolistTitleAC=(id:string,title:string):ChangeTodolistTitleAT=>{
+export const ChangeTodolistTitleAC=(title:string,id:string):ChangeTodolistTitleAT=>{
 	return {
 		type: "CHANGE-TODOLIST-TITLE",
 		id,

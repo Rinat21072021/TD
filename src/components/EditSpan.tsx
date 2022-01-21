@@ -1,6 +1,5 @@
-import React, {ChangeEvent, useState} from "react";
-import {Delete} from "@material-ui/icons";
-import {IconButton} from "@material-ui/core";
+import React, {ChangeEvent, useCallback, useState} from "react";
+
 
 export type EditSpanPropsType = {
     title: string
@@ -8,13 +7,13 @@ export type EditSpanPropsType = {
 
 
 }
-export const EditSpan = (props: EditSpanPropsType) => {
+export const EditSpan = React.memo( (props: EditSpanPropsType) => {
     const [modeSpan, setModeSpan] = useState(true)
     const [title, setTitle] = useState('')
 
     const activeEditMod = () => {
         setModeSpan(true)
-        props.onChangeTitle(title)
+        props.onChangeTitle && props.onChangeTitle(title)
     }
     const editInputHandler = () => {
         setModeSpan(false)
@@ -32,4 +31,4 @@ export const EditSpan = (props: EditSpanPropsType) => {
 
         />
 
-}
+})

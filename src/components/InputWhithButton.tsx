@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react"
 import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
@@ -7,7 +7,8 @@ type typeProps = {
 	isLabel: boolean
 
 }
-export const InputWithButton = (props: typeProps) => {
+export const InputWithButton = React.memo( (props: typeProps) => {
+	console.log('InputWithButton')
 	let [title, setTitle] = useState("")
 	let [error, setError] = useState<string | null>(null)
 
@@ -19,11 +20,11 @@ export const InputWithButton = (props: typeProps) => {
 			setError("Title is required");
 		}
 	}
-	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+	const onChangeHandler = useCallback ((e: ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.currentTarget.value)
-	}
+	},[])
 	const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-		setError(null);
+		error && setError(null);
 		if (e.charCode === 13) {
 			addTask();
 		}
@@ -69,4 +70,4 @@ export const InputWithButton = (props: typeProps) => {
 			</div>)
 	}
 
-}
+})
