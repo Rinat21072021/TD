@@ -1,33 +1,29 @@
-import React, {useCallback, useReducer, useState} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {InputWithButton} from "./components/InputWhithButton";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
 	AddTodolistAC,
 	ChangeTodolistFilterAC,
-	ChangeTodolistTitleAC, initialState,
+	ChangeTodolistTitleAC,
+	FilterValuesType,
 	RemoveTodolistAC,
-	todolistsReducer
+	TodolistDomainType
 } from "./reducer/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./reducer/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducer/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
+import {TaskStatuses, TaskType} from "./api/TodolistApi";
 
-export type FilterValuesType = "all" | "active" | "completed";
 
-export type TodolistType = {
-	id: string
-	title: string
-	filter: FilterValuesType
-}
 export type TasksType = { [key: string]: Array<TaskType> }
 
 export const AppWithRedux= React.memo(()=> {
 	console.log('App')
 
-	const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolist)
+	const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolist)
 	const tasks = useSelector<AppRootStateType, TasksType>(state => state.task)
 	const dispatch = useDispatch()
 
@@ -46,9 +42,9 @@ export const AppWithRedux= React.memo(()=> {
 
 	},[])
 
-	const changeStatus = useCallback((taskId: string, isDone: boolean, todolistID: string)=> {
+	const changeStatus = useCallback((taskId: string, status:TaskStatuses, todolistID: string)=> {
 		// setTasks({...tasks, [todolistID]: tasks[todolistID].map(m => m.id === taskId ? {...m, isDone: isDone} : m)})
-		const action = changeTaskStatusAC(taskId, isDone, todolistID)
+		const action = changeTaskStatusAC(taskId, status, todolistID)
 		dispatch(action)
 	},[])
 
@@ -117,10 +113,10 @@ export const AppWithRedux= React.memo(()=> {
 						let tasksForTodolist = tasks[m.id];
 
 						if (m.filter === "active") {
-							tasksForTodolist = tasks[m.id].filter(t => t.isDone);
+							tasksForTodolist = tasks[m.id].filter(t => t.status===TaskStatuses.Completed);
 						}
 						if (m.filter === "completed") {
-							tasksForTodolist = tasks[m.id].filter(t => !t.isDone);
+							tasksForTodolist = tasks[m.id].filter(t => t.status===TaskStatuses.New);
 						}
 						return <Grid item key={m.id}>
 							<Paper elevation={5} style={{padding: "20px"}}>
