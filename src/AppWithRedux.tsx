@@ -18,7 +18,7 @@ import {
 	changeTaskTitleAC,
 	removeTaskAC,
 	removeTaskTC,
-	TasksType
+	TasksType, updateTaskStatusTC
 } from "./reducer/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
@@ -48,8 +48,7 @@ export const AppWithRedux = React.memo(() => {
 	}, [])
 
 	const changeStatus = useCallback((taskId: string, status: TaskStatuses, todolistID: string) => {
-		const action = changeTaskStatusAC(taskId, status, todolistID)
-		dispatch(action)
+		dispatch(updateTaskStatusTC(taskId, status, todolistID))
 	}, [])
 
 	const onChangeTitle = useCallback((taskId: string, title: string, todolistID: string) => {
