@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
 	baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -26,8 +26,10 @@ export const TodoApi = {
 		return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
 	},
 	createTaskResponse(todolistId:string,title:string){
-		return instance.post(`todo-lists/${todolistId}/tasks/${title}`)
-
+		return instance.post <{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${title}`)
+	},
+	updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+		return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
 	}
 }
 
@@ -68,7 +70,7 @@ export type TaskType={
 	order:number
 	addedDate: string
 }
-type UpdateTaskType={
+export type UpdateTaskModelType={
 	title: string
 	description:string
 	status: number

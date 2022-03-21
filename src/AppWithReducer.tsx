@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState} from 'react';
+import React, {useCallback, useReducer} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -8,13 +8,20 @@ import {Menu} from "@material-ui/icons";
 import {
 	AddTodolistAC,
 	ChangeTodolistFilterAC,
-	ChangeTodolistTitleAC, FilterValuesType,
+	ChangeTodolistTitleAC,
+	FilterValuesType,
 	RemoveTodolistAC,
 	todolistsReducer
 } from "./reducer/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./reducer/tasks-reducer";
+import {
+	addTaskAC,
+	addTaskTC,
+	changeTaskStatusAC,
+	changeTaskTitleAC,
+	removeTaskAC,
+	tasksReducer
+} from "./reducer/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/TodolistApi";
-
 
 
 export type TasksType = { [key: string]: Array<TaskType> }
@@ -66,8 +73,9 @@ function AppWithReducer() {
 	const addTask= useCallback((title: string, todolistID: string)=> {
 		// let task = {id: v1(), title: title, isDone: false};
 		// setTasks({...tasks, [todolistID]: [task, ...tasks[todolistID]]})
-		const action = addTaskAC(title, todolistID)
-		dispatchTasks(action)
+		const action = addTaskTC(title, todolistID)
+		dispatchTasks(addTaskAC({id: v1(), title: title,status:TaskStatuses.New,todoListId: todolistID,
+			startDate:'',deadline:'',addedDate:'',order:0,priority:TaskPriorities.Low,description:''},))
 
 	},[dispatchTasks])
 

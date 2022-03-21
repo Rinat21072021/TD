@@ -3,8 +3,8 @@ import {ListItem} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import {EditSpan} from "./EditSpan";
 import {ButtonComponents} from "./ButtonComponents";
-import {TaskType} from "../Todolist";
-import {TaskStatuses} from "../api/TodolistApi";
+
+import {TaskStatuses, TaskType} from "../api/TodolistApi";
 
 type TaskPropsType = {
 	changeTaskStatus: (taskId: string, status: TaskStatuses, todolistID: string) => void
