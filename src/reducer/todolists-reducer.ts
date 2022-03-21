@@ -9,8 +9,7 @@ export type RemoveTodolistAT = {
 }
 export type AddTodolistAT = {
 	type: "ADD-TODOLIST"
-	title: string
-	todolistId:string
+	todolist:TodolistType
 
 }
 export type ChangeTodolistFilterAT = {
@@ -48,15 +47,9 @@ export const todolistsReducer = (todolists=initialState, action: ActionType): Ar
 		case "REMOVE-TODOLIST":
 			return todolists.filter(fl => fl.id !== action.id)
 		case "ADD-TODOLIST":
-			const newTodolistID = action.todolistId
-			const todolist: TodolistDomainType = {
-				id: newTodolistID,
-				title: action.title,
-				filter: 'all',
-				addedDate:'',
-				order: 0
-			}
-			return [...todolists, todolist]
+			const newTodolist:TodolistDomainType= {...action.todolist, filter:'all'}
+
+			return [newTodolist, ...todolists]
 		case"CHANGE-TODOLIST-FILTER":
 			return todolists.map(m => m.id === action.id ? {...m, filter: action.filter} : m)
 		case "CHANGE-TODOLIST-TITLE":
@@ -71,11 +64,10 @@ export const RemoveTodolistAC = (id: string): RemoveTodolistAT => {
 		id: id
 	}
 }
-export const AddTodolistAC = (title: string):AddTodolistAT => {
+export const AddTodolistAC = (todolist:TodolistType):AddTodolistAT => {
 	return {
 		type: "ADD-TODOLIST",
-		title: title,
-		todolistId:v1()
+		todolist
 
 	}
 }
@@ -86,7 +78,7 @@ export const ChangeTodolistFilterAC=(filter:FilterValuesType,id:string):ChangeTo
 		id:id
 	}
 }
-export const ChangeTodolistTitleAC=(title:string,id:string):ChangeTodolistTitleAT=>{
+export const ChangeTodolistTitleAC=(id:string,title:string):ChangeTodolistTitleAT=>{
 	return {
 		type: "CHANGE-TODOLIST-TITLE",
 		id,
@@ -106,4 +98,22 @@ export const getTodosTC=()=>(dispatch:Dispatch)=>{
 			const todos = res.data
 			dispatch(getTodosAC(todos) )
 		})
+}
+export const removeTodosTC=(todolistId:string)=>(dispatch:Dispatch)=>{
+	TodoApi.deleteTodo(todolistId)
+		.then((res)=>{
+			dispatch(RemoveTodolistAC(todolistId) )
+		})
+}
+export const addTodolistTC=(title:string)=>(dispatch:Dispatch)=>{
+	TodoApi.createTodo(title)
+		.then((res)=>{
+			dispatch(AddTodolistAC(res.data.data.item))
+		})
+}
+export const changeTodolistTitleTC = (todolistId:string,title:string)=>(dispatch:Dispatch)=>{
+TodoApi.updateTitleTodo(todolistId,title)
+	.then((res)=>{
+		dispatch(ChangeTodolistTitleAC(todolistId,title))
+	})
 }

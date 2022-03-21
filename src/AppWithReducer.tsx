@@ -113,15 +113,12 @@ function AppWithReducer() {
 	}
 
 	function addTodolist(title: string) {
-		// 	const newTodolistID = v1()
-		// 	let todolist: TodolistType = {
-		// 		id: newTodolistID,
-		// 		title: title,
-		// 		filter: 'all'
-		// 	}
-		// 	setTodolists([todolist, ...todolists])
-		// 	setTasks({...tasks, [todolist.id]: []})
-		const action = AddTodolistAC(title)
+		const action = AddTodolistAC({
+			title,
+			order:0,
+			id:v1(),
+			addedDate:''
+		})
 		dispatchTodolists(action)
 		dispatchTasks(action)
 	}
