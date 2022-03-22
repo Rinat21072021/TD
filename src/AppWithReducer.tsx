@@ -16,7 +16,7 @@ import {
 import {
 	addTaskAC,
 	addTaskTC,
-	changeTaskStatusAC,
+	updateTaskAC,
 	changeTaskTitleAC,
 	removeTaskAC,
 	tasksReducer
@@ -81,13 +81,13 @@ function AppWithReducer() {
 
 	function changeStatus(taskId: string, status:TaskStatuses, todolistID: string) {
 		// setTasks({...tasks, [todolistID]: tasks[todolistID].map(m => m.id === taskId ? {...m, isDone: isDone} : m)})
-		const action = changeTaskStatusAC(taskId, status, todolistID)
+		const action = updateTaskAC(taskId, {status}, todolistID)
 		dispatchTasks(action)
 	}
 
 	function onChangeTitle(taskId: string, title: string, todolistID: string) {
 		// setTasks({...tasks, [todolistID]: tasks[todolistID].map(m => m.id === taskId ? {...m, title: title} : m)})
-		const action = changeTaskTitleAC(taskId, title, todolistID)
+		const action = updateTaskAC(taskId, {title}, todolistID)
 		dispatchTasks(action)
 	}
 
