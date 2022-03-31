@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import './App.css';
-import {Todolist} from './Todolist';
+import '../App.css';
+import {Todolist} from '../Todolist';
 import {v1} from 'uuid';
-import {InputWithButton} from "./components/InputWhithButton";
+import {InputWithButton} from "../components/InputWhithButton";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {TodolistDomainType} from "./reducer/todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/TodolistApi";
+import {TodolistDomainType} from "../reducer/todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/TodolistApi";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -18,8 +18,8 @@ function App() {
 	let tododlist_2 = v1()
 
 	let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
-		{id: tododlist_1, title: "What to learn", filter: "all",addedDate: '',order: 0},
-		{id: tododlist_2, title: "What to buy", filter: "all",addedDate: '',order: 0},
+		{id: tododlist_1, title: "What to learn", filter: "all",addedDate: '',order: 0, entityStatus:'idle'},
+		{id: tododlist_2, title: "What to buy", filter: "all",addedDate: '',order: 0, entityStatus:'idle'},
 	])
 
 	let [tasks, setTasks] = useState<TasksType>({
@@ -88,7 +88,8 @@ function App() {
 			title: title,
 			filter: 'all',
 			addedDate: '',
-			order: 0
+			order: 0,
+			entityStatus:'idle'
 		}
 		setTodolists([todolist, ...todolists])
 		setTasks({...tasks, [todolist.id]: []})
@@ -126,14 +127,14 @@ function App() {
 							return <Grid item key={m.id}>
 							<Paper elevation={5} style={{padding:"20px"}}>
 							<Todolist
-								todolistID={m.id}
-								title={m.title}
+								todolist={m}
+								// title={m.title}
 								tasks={tasksForTodolist}
 								removeTask={removeTask}
 								changeFilter={changeFilter}
 								addTask={addTask}
 								changeTaskStatus={changeStatus}
-								filter={m.filter}
+								// filter={m.filter}
 								removeTodolist={removeTodolist}
 								onChangeTitle={onChangeTitle}
 								onChangeTitleTodolist={onChangeTitleTodolist}

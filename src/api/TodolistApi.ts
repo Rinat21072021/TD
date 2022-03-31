@@ -6,6 +6,7 @@ const instance = axios.create({
 	withCredentials: true,
 });
 
+//api
 export const TodoApi = {
 	getTodo() {
 		return instance.get<Array<TodolistType>>(`todo-lists`)
@@ -33,6 +34,7 @@ export const TodoApi = {
 	}
 }
 
+//types
 export type TodolistType = {
 	id: string,
 	title: string,
@@ -69,6 +71,7 @@ export type TaskType={
 	todoListId: string
 	order:number
 	addedDate: string
+
 }
 export type UpdateTaskModelType={
 	title: string
